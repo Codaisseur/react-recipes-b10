@@ -5,12 +5,8 @@ import HeartGrey from '../images/heart-grey.svg'
 import HeartRed from '../images/heart-red.svg'
 
 class LikeButton extends PureComponent {
-  state = {
-    liked: false
-  }
-
   classNames() {
-    const { liked } = this.state
+    const { liked } = this.props
 
     let classes = 'LikeButton'
 
@@ -19,17 +15,12 @@ class LikeButton extends PureComponent {
     return classes
   }
 
-  toggleLike() {
-    this.setState({
-      liked: !this.state.liked
-    })
-  }
-
   render() {
-    const { liked } = this.state
+    const { liked, onChange } = this.props
+
     return (
       <p className={ this.classNames() }>
-        <button onClick={this.toggleLike.bind(this)}>
+        <button onClick={onChange}>
           <img className="heart" alt="liked" src={ liked ? HeartRed : HeartGrey } />
           <span className="copy">
             <img className="heart" alt="not liked" src={ liked ? HeartRed : HeartGrey } />
