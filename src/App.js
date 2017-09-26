@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import RecipesContainer from './recipes/RecipesContainer'
 import recipes from './fixtures/recipes'
+import './App.css'
 
 class App extends Component {
   state = {
