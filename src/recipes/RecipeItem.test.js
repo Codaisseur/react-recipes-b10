@@ -4,9 +4,6 @@ import chai, { expect } from 'chai'
 import { shallow } from 'enzyme'
 import chaiEnzyme from 'chai-enzyme'
 import RecipeItem from './RecipeItem'
-import veganIcon from '../images/vegan.svg'
-import vegetarianIcon from '../images/vegetarian.svg'
-import pescatarianIcon from '../images/pescatarian.svg'
 import spies from 'chai-spies'
 
 chai.use(chaiEnzyme())
