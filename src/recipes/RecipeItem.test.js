@@ -4,6 +4,9 @@ import chai, { expect } from 'chai'
 import { shallow } from 'enzyme'
 import chaiEnzyme from 'chai-enzyme'
 import RecipeItem from './RecipeItem'
+import veganIcon from '../images/vegan.svg'
+import vegetarianIcon from '../images/vegetarian.svg'
+import pescatarianIcon from '../images/pescatarian.svg'
 
 chai.use(chaiEnzyme())
 
@@ -27,7 +30,23 @@ describe('<RecipeItem />', () => {
     expect(container.find('h1')).to.have.text(recipe.title)
   })
 
-  it('shows a 🥕  when it is vegetarian', () => {
-    expect(container.find('ul > li')).to.have.text('🥕')
+  it('shows a carrot when it is vegetarian', () => {
+    expect(container.find('ul > li > img')).to.have.attr('src', vegetarianIcon)
+  })
+
+  describe('when it is pescatarian', () => {
+    const container = shallow(<RecipeItem { ...recipe } vegetarian={false} pescatarian={true} />)
+
+    it('shows a fish', () => {
+      expect(container.find('ul > li > img')).to.have.attr('src', pescatarianIcon)
+    })
+  })
+
+  describe('when it is vegan as well as vegetarian', () => {
+    const container = shallow(<RecipeItem { ...recipe } vegetarian={true} vegan={true} />)
+
+    it('only shows a corn thingy', () => {
+      expect(container.find('ul > li > img')).to.have.attr('src', veganIcon)
+    })
   })
 })
