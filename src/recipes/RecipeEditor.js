@@ -21,12 +21,12 @@ class RecipeEditor extends PureComponent {
     const { title, summary, vegan, vegetarian, pescatarian, photo } = props
 
     this.state = {
-      title,
+      title: title || '',
       summary,
       vegan,
       vegetarian,
       pescatarian,
-      photo,
+      photo: photo || '',
       errors: {}
     }
   }
