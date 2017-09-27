@@ -1,6 +1,8 @@
 // src/recipes/RecipeItem.js
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import updateRecipe from '../actions/recipes/update'
 import LikeButton from '../components/LikeButton'
 import RecipeCategory from './RecipeCategory'
 import './RecipeItem.css'
@@ -21,7 +23,7 @@ class RecipeItem extends PureComponent {
 
   toggleLike() {
     const { _id, liked, onChange } = this.props
-    onChange(_id, { liked: !liked })
+    onChange({ _id, liked: !liked })
   }
 
   render() {
@@ -52,4 +54,6 @@ class RecipeItem extends PureComponent {
   }
 }
 
-export default RecipeItem
+const mapDispatchToProps = { onChange: updateRecipe }
+
+export default connect(null, mapDispatchToProps)(RecipeItem)
