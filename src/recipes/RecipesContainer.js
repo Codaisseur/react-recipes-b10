@@ -7,7 +7,7 @@ import RecipeItem from './RecipeItem'
 import SeedButton from './SeedButton'
 import './RecipesContainer.css'
 
-class RecipesContainer extends PureComponent {
+export class RecipesContainer extends PureComponent {
   static propTypes = {
     recipes: PropTypes.array.isRequired,
   }

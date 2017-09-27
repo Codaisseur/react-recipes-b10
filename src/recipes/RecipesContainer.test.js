@@ -3,18 +3,15 @@ import React from 'react'
 import chai, { expect } from 'chai'
 import { shallow } from 'enzyme'
 import chaiEnzyme from 'chai-enzyme'
-import RecipesContainer from './RecipesContainer'
+import { RecipesContainer } from './RecipesContainer'
 import Title from '../components/Title'
 import RecipeItem from './RecipeItem'
 import recipes from '../fixtures/recipes'
-import spies from 'chai-spies'
 
 chai.use(chaiEnzyme())
-chai.use(spies)
 
 describe('<RecipesContainer />', () => {
-  const updateRecipe = chai.spy()
-  const container = shallow(<RecipesContainer recipes={recipes} updateRecipe={updateRecipe} />)
+  const container = shallow(<RecipesContainer recipes={recipes} />)
 
   it('is wrapped in a div with class name "recipes"', () => {
     expect(container).to.have.className('wrapper')
