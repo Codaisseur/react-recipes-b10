@@ -14,6 +14,7 @@ export class RecipeItem extends PureComponent {
     _id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     summary: PropTypes.string.isRequired,
+    photo: PropTypes.string,
     vegan: PropTypes.bool,
     vegetarian: PropTypes.bool,
     pescatarian: PropTypes.bool,

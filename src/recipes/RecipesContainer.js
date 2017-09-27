@@ -26,9 +26,7 @@ export class RecipesContainer extends PureComponent {
           <SeedButton />
 
           <RecipeEditor
-            photo="http://www.thechinawatch.com/wp-content/uploads/2012/03/11113.jpg"
-            summary="Some cool summary here!"
-            title="Panda Burgerz!" />
+            photo="http://www.thechinawatch.com/wp-content/uploads/2012/03/11113.jpg" />
         </header>
 
         <main>

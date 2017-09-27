@@ -27,6 +27,7 @@ class RecipeEditor extends PureComponent {
       vegetarian,
       pescatarian,
       photo,
+      errors: {}
     }
   }
 
@@ -36,13 +37,13 @@ class RecipeEditor extends PureComponent {
       this.refs.summary.medium.elements[0].focus()
     }
     this.setState({
-      title: this.refs.title.value
+      title: event.target.value
     })
   }
 
   updatePhoto(event) {
     this.setState({
-      photo: this.refs.photo.value
+      photo: event.target.value
     })
   }
 
@@ -61,7 +62,31 @@ class RecipeEditor extends PureComponent {
     })
   }
 
+  validate() {
+    const isTitleValid = this.validateTitle()
+    const isSummaryValid = this.validateSummary()
+    this.setState({
+      errors: {
+        title: isTitleValid ? null : 'The title can not be blank!',
+        summary: isSummaryValid ? null : 'The summary should be at least 30 characters long!'
+      }
+    })
+    return isTitleValid && isSummaryValid
+  }
+
+  validateTitle() {
+    const { title } = this.state
+    return title && title.length > 0
+  }
+
+  validateSummary() {
+    const { summary } = this.state
+    return summary && toMarkdown(summary).length > 30
+  }
+
   saveRecipe() {
+    if (!this.validate()) return
+
     const {
       title,
       summary,
@@ -82,9 +107,20 @@ class RecipeEditor extends PureComponent {
     }
 
     this.props.save(recipe)
+
+    this.setState({
+      title: '',
+      summary: '',
+      photo: '',
+      vegetarian: null,
+      vegan: null,
+      pescatarian: null
+    })
   }
 
   render() {
+    const { errors } = this.state
+
     return (
       <div className="editor">
         <input
@@ -92,26 +128,29 @@ class RecipeEditor extends PureComponent {
           ref="title"
           className="title"
           placeholder="Title"
-          defaultValue={this.state.title}
-          onChange={this.updateTitle.bind(this)}
-          onKeyUp={this.updateTitle.bind(this)} />
+          value={this.state.title}
+          onChange={this.updateTitle.bind(this)} />
+
+        { errors.title ? <small className="error">{errors.title}</small> : null }
 
         <Editor
           ref="summary"
           options={{
             placeholder: {text: 'Write an Introduction...'}
           }}
+          value={this.state.summary}
           onChange={this.updateIntro.bind(this)}
           text={this.state.summary} />
+
+        { errors.summary ? <small className="error">{errors.summary}</small> : null }
 
         <input
           type="text"
           ref="photo"
           className="photo"
           placeholder="Photo URL"
-          defaultValue={this.state.photo}
-          onChange={this.updatePhoto.bind(this)}
-          onKeyUp={this.updatePhoto.bind(this)} />
+          value={this.state.photo}
+          onChange={this.updatePhoto.bind(this)} />
 
         {TYPES.map((type) => {
           return <label key={type} htmlFor={type}>
