@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import Title from '../components/Title'
 import RecipeItem from './RecipeItem'
 import SeedButton from './SeedButton'
+import RecipeEditor from './RecipeEditor'
 import './RecipesContainer.css'
 
 export class RecipesContainer extends PureComponent {
@@ -23,6 +24,11 @@ export class RecipesContainer extends PureComponent {
         <header>
           <Title content="Recipes" />
           <SeedButton />
+
+          <RecipeEditor
+            photo="http://www.thechinawatch.com/wp-content/uploads/2012/03/11113.jpg"
+            summary="Some cool summary here!"
+            title="Panda Burgerz!" />
         </header>
 
         <main>
