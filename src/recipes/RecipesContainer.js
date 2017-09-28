@@ -6,11 +6,17 @@ import Title from '../components/Title'
 import RecipeItem from './RecipeItem'
 import SeedButton from './SeedButton'
 import RecipeEditor from './RecipeEditor'
+import fetchRecipes from '../actions/recipes/fetch'
 import './RecipesContainer.css'
 
 export class RecipesContainer extends PureComponent {
   static propTypes = {
     recipes: PropTypes.array.isRequired,
+    fetchRecipes: PropTypes.func.isRequired,
+  }
+
+  componentWillMount() {
+    this.props.fetchRecipes()
   }
 
   renderRecipe(recipe, index) {
@@ -38,5 +44,6 @@ export class RecipesContainer extends PureComponent {
 }
 
 const mapStateToProps = ({ recipes }) => ({ recipes })
+const mapDispatchToProps = { fetchRecipes }
 
-export default connect(mapStateToProps)(RecipesContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(RecipesContainer)
