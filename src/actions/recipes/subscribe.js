@@ -10,7 +10,9 @@ const api = new API()
 const recipes = api.service('recipes')
 
 export default () => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    if (getState().subscriptions.includes('recipes')) return
+
     recipes.on('created', (recipe) => { dispatch(createdRecipe(recipe)) })
     recipes.on('updated', (recipe) => { dispatch(updatedRecipe(recipe)) })
     recipes.on('patched', (recipe) => { dispatch(updatedRecipe(recipe)) })

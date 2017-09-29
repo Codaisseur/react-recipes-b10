@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import fetchRecipes from '../actions/recipes/fetch'
+import subscribeToRecipesService from '../actions/recipes/subscribe'
 import Title from '../components/Title'
 
 export class RecipePage extends PureComponent {
@@ -11,6 +12,7 @@ export class RecipePage extends PureComponent {
 
   componentWillMount() {
     this.props.fetchRecipes()
+    this.props.subscribeToRecipesService()
   }
 
   render() {
@@ -38,5 +40,6 @@ const mapStateToProps = ({ recipes }, { params }) => {
     ...recipe
   }
 }
+const mapDispatchToProps = { fetchRecipes, subscribeToRecipesService }
 
-export default connect(mapStateToProps, { fetchRecipes })(RecipePage)
+export default connect(mapStateToProps, mapDispatchToProps)(RecipePage)
