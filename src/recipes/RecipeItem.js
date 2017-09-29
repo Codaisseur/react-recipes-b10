@@ -2,7 +2,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import updateRecipe from '../actions/recipes/update'
+import toggleLikeAction from '../actions/recipes/toggleLike'
 import LikeButton from '../components/LikeButton'
 import RecipeCategory from './RecipeCategory'
 import { Link } from 'react-router'
@@ -20,16 +20,17 @@ export class RecipeItem extends PureComponent {
     vegetarian: PropTypes.bool,
     pescatarian: PropTypes.bool,
     liked: PropTypes.bool,
-    onChange: PropTypes.func.isRequired,
+    toggleLikeAction: PropTypes.func.isRequired,
   }
 
   toggleLike() {
-    const { _id, liked, onChange } = this.props
-    onChange({ _id, liked: !liked })
+    const { _id, likedBy, currentUser } = this.props
+    console.log('CLICK (RecipeItem)', _id, currentUser)
+    this.props.toggleLikeAction({ _id, likedBy }, currentUser)
   }
 
   render() {
-    const { _id, title, summary, vegan, vegetarian, pescatarian, liked, photo } = this.props
+    const { _id, title, summary, vegan, vegetarian, pescatarian, liked, photo, likedBy } = this.props
     const categories = { vegan, vegetarian, pescatarian }
 
     return(
@@ -51,13 +52,22 @@ export class RecipeItem extends PureComponent {
           <p>{ summary }</p>
         </div>
         <footer>
-          <LikeButton onChange={this.toggleLike.bind(this)} liked={liked} />
+          <LikeButton
+            liked={ liked }
+            likes={likedBy.length}
+            onChange={ this.toggleLike.bind(this) } />
         </footer>
       </article>
     )
   }
 }
 
-const mapDispatchToProps = { onChange: updateRecipe }
+const mapStateToProps = ({ currentUser }, { likedBy }) => {
+  return {
+    currentUser,
+    liked: likedBy.filter((like) => (like === (currentUser && currentUser._id))).length > 0
+  }
+}
+const mapDispatchToProps = { toggleLikeAction }
 
-export default connect(null, mapDispatchToProps)(RecipeItem)
+export default connect(mapStateToProps, mapDispatchToProps)(RecipeItem)
