@@ -1,6 +1,8 @@
 // src/actions/recipes/fetch.js
 import API from '../../api'
 import loading from '../loading'
+import loadError from '../load-error'
+import loadSuccess from '../load-success'
 
 export const FETCHED_RECIPES = 'FETCHED_RECIPES'
 
@@ -13,8 +15,8 @@ export default () => {
     const backend = api.service('recipes')
     backend.find()
     .then((result) => {
+      dispatch(loadSuccess())
       dispatch(loading(false))
-      console.log(result)
       dispatch({
         type: FETCHED_RECIPES,
         payload: result.data
@@ -22,7 +24,7 @@ export default () => {
     })
     .catch((error) => {
       dispatch(loading(false))
-      console.error(error)
+      dispatch(loadError(error))
     })
   }
 }
