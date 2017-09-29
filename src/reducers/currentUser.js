@@ -1,4 +1,5 @@
 import { USER_SIGNED_IN } from '../actions/user/sign-in'
+import { USER_SIGNED_OUT } from '../actions/user/sign-out'
 
 const CURRENT_USER_KEY = 'currentUserRecipesB10'
 
@@ -9,6 +10,10 @@ export default (state = currentUser, { type, payload } = {}) => {
     case USER_SIGNED_IN :
       localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(payload))
       return { ...payload }
+
+    case USER_SIGNED_OUT :
+      localStorage.removeItem(CURRENT_USER_KEY)
+      return null
 
     default :
       return state
