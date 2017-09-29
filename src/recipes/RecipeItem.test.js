@@ -5,6 +5,7 @@ import { shallow } from 'enzyme'
 import chaiEnzyme from 'chai-enzyme'
 import { RecipeItem } from './RecipeItem'
 import spies from 'chai-spies'
+import { Link } from 'react-router'
 
 chai.use(chaiEnzyme())
 chai.use(spies)
@@ -28,6 +29,7 @@ describe('<RecipeItem />', () => {
   })
 
   it('contains a the title', () => {
-    expect(container.find('h1')).to.have.text(recipe.title)
+    const { _id, title } = recipe
+    expect(container.find('h1')).to.contain(<Link to={`/recipes/${_id}`}>{ title }</Link>)
   })
 })
