@@ -7,6 +7,7 @@ import RecipeItem from './RecipeItem'
 import SeedButton from './SeedButton'
 import RecipeEditor from './RecipeEditor'
 import fetchRecipes from '../actions/recipes/fetch'
+import subscribeToRecipesService from '../actions/recipes/subscribe'
 import './RecipesContainer.css'
 
 export class RecipesContainer extends PureComponent {
@@ -17,6 +18,7 @@ export class RecipesContainer extends PureComponent {
 
   componentWillMount() {
     this.props.fetchRecipes()
+    this.props.subscribeToRecipesService()
   }
 
   renderRecipe(recipe, index) {
@@ -44,6 +46,6 @@ export class RecipesContainer extends PureComponent {
 }
 
 const mapStateToProps = ({ recipes }) => ({ recipes })
-const mapDispatchToProps = { fetchRecipes }
+const mapDispatchToProps = { fetchRecipes, subscribeToRecipesService }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RecipesContainer)
